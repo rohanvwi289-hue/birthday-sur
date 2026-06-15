@@ -19,6 +19,10 @@
     .heart { position: fixed; bottom: -40px; color: rgba(255, 105, 180, 0.5); animation: floatHeart linear infinite; z-index: 1; pointer-events: none; }
     @keyframes floatHeart { 0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; } 15% { opacity: 0.6; } 100% { transform: translateY(-115vh) rotate(360deg) scale(1.8); opacity: 0; } }
 
+    /* Sparkle Effect Added */
+    .sparkle { position: fixed; width: 7px; height: 7px; border-radius: 50%; background: white; box-shadow: 0 0 10px white; animation: sparkle 2s infinite ease-in-out; z-index: 2; pointer-events: none; }
+    @keyframes sparkle { 0%, 100% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.2); opacity: 0.8; } }
+
     .step { display: none; animation: popIn .8s ease forwards; }
     .step.active { display: block; }
     @keyframes popIn { from { opacity: 0; transform: translateY(35px) scale(.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -33,10 +37,10 @@
     @keyframes bounceGift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
     .cake { position: relative; width: 210px; height: 135px; margin: 0 auto; }
-    .cake-base { position: absolute; bottom: 0; width: 210px; height: 85px; background: linear-gradient(180deg, #ffb7c5, #ff8da1); border-radius: 18px 18px 28px 28px; }
-    .cake-top { position: absolute; bottom: 70px; width: 210px; height: 40px; background: #fffdf0; border-radius: 50%; }
-    .candle { position: absolute; bottom: 105px; left: 96px; width: 18px; height: 45px; background: repeating-linear-gradient(45deg, #fff, #fff 6px, #ffb7c5 6px, #ffb7c5 12px); border-radius: 8px; }
-    .flame { position: absolute; bottom: 146px; left: 95px; width: 20px; height: 30px; background: radial-gradient(circle, #fffdf0 20%, #ffd700 60%, #ff8c00 100%); border-radius: 50%; animation: flame .25s infinite alternate; cursor: pointer; }
+    .cake-base { background: linear-gradient(180deg, #ffb7c5, #ff8da1); border-radius: 18px 18px 28px 28px; }
+    .cake-top { background: #fffdf0; border-radius: 50%; }
+    .candle { background: repeating-linear-gradient(45deg, #fff, #fff 6px, #ffb7c5 6px, #ffb7c5 12px); border-radius: 8px; }
+    .flame { background: radial-gradient(circle, #fffdf0 20%, #ffd700 60%, #ff8c00 100%); border-radius: 50%; animation: flame .25s infinite alternate; cursor: pointer; }
     @keyframes flame { from { transform: scale(1) rotate(-3deg); } to { transform: scale(1.15) rotate(3deg); } }
   </style>
 </head>
@@ -93,6 +97,19 @@
     document.getElementById('catchHeart').addEventListener('click', () => { score++; document.getElementById('score').innerText = score; if(score>=5) showStep(2); else moveHeart(); });
     function openGift(b) { b.classList.add('open'); document.getElementById('giftMessage').classList.remove('hidden'); setTimeout(() => showStep(3), 2000); }
     function blowCandle() { document.getElementById('flame').style.display='none'; setTimeout(() => showStep(4), 1000); }
+    
+    // Sparkle generator function
+    function createSparkles() {
+      for (let i = 0; i < 30; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.left = Math.random() * 100 + 'vw';
+        s.style.top = Math.random() * 100 + 'vh';
+        s.style.animationDelay = Math.random() * 2 + 's';
+        document.body.appendChild(s);
+      }
+    }
+    window.addEventListener('DOMContentLoaded', () => { createSparkles(); });
   </script>
 </body>
 </html>
